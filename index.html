@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Turbo Pancake Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Source+Code+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-title">🥞 Turbo Pancake</div>
+    <div class="nav-date" id="todayLabel"></div>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showPage('today', this)">📋 Today</div>
+    <div class="nav-tab" onclick="showPage('weekly', this)">📊 Weekly</div>
+    <div class="nav-tab" onclick="showPage('monthly', this)">📅 Monthly</div>
+  </div>
+</div>
+
+<!-- TODAY PAGE -->
+<div class="page active" id="page-today">
+
+  <div class="date-nav">
+    <button onclick="changeDay(-1)">‹</button>
+    <div>
+      <div class="date-nav-label" id="dayLabel"></div>
+      <div class="date-nav-sub" id="daySubLabel"></div>
+    </div>
+    <button onclick="changeDay(1)">›</button>
+  </div>
+
+  <!-- Sticky Progress — full width, no rounded corners -->
+  <div class="card sticky-progress">
+    <div class="progress-row">
+      <div class="progress-label">Protein</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="prog-protein" style="background:linear-gradient(90deg,#667EEA,#764BA2);width:0%"></div><span class="progress-pct" id="prog-protein-pct">0%</span></div>
+      <div class="progress-val" id="prog-protein-val">0/95g</div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label">Calories</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="prog-cal" style="background:linear-gradient(90deg,var(--coral),var(--orange));width:0%"></div><span class="progress-pct" id="prog-cal-pct">0%</span></div>
+      <div class="progress-val" id="prog-cal-val">0/1450</div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label">Fibre</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="prog-fibre" style="background:linear-gradient(90deg,#84cc16,#22c55e);width:0%"></div><span class="progress-pct" id="prog-fibre-pct">0%</span></div>
+      <div class="progress-val" id="prog-fibre-val">0/30g</div>
+    </div>
+  </div>
+
+  <!-- MEAL 1 -->
+  <div class="card meal-card">
+    <div class="meal-header" onclick="toggleSection(this)">
+      <div class="meal-badge">🌅 Meal 1</div>
+      <div class="meal-header-right">
+        <div class="meal-complete-badge" id="m1-complete"></div>
+        <span class="collapse-chevron">▾</span>
+      </div>
+    </div>
+    <div class="meal-body">
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🌾</span> Carb
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m1-carb-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m1-carb-custom" rows="1" placeholder="e.g. 1 slice wholegrain bread..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🥚</span> Protein
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m1-protein-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m1-protein-custom" rows="1" placeholder="e.g. 100g chicken breast..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🥦</span> Vegetable
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m1-veg-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m1-veg-custom" rows="1" placeholder="e.g. stir fried bok choy..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🍊</span> Fruit
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m1-fruit-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m1-fruit-custom" rows="1" placeholder="e.g. small apple..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🧈</span> Fat
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m1-fat-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m1-fat-custom" rows="1" placeholder="e.g. 1 tbsp olive oil..."></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.meal-body -->
+  </div>
+
+  <!-- MEAL 2 -->
+  <div class="card meal-card">
+    <div class="meal-header" onclick="toggleSection(this)">
+      <div class="meal-badge meal2">🌙 Meal 2</div>
+      <div class="meal-header-right">
+        <div class="meal-complete-badge" id="m2-complete"></div>
+        <span class="collapse-chevron">▾</span>
+      </div>
+    </div>
+    <div class="meal-body">
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🌾</span> Carb
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m2-carb-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m2-carb-custom" rows="1" placeholder="e.g. sweet potato..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🐟</span> Protein
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m2-protein-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m2-protein-custom" rows="1" placeholder="e.g. 150g salmon fillet..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🥦</span> Vegetable
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m2-veg-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m2-veg-custom" rows="1" placeholder="e.g. mixed greens salad..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🍊</span> Fruit
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m2-fruit-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m2-fruit-custom" rows="1" placeholder="e.g. banana..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="food-group">
+        <div class="food-group-label" onclick="toggleSection(this)">
+          <span>🧈</span> Fat
+          <span class="collapse-chevron group-chevron">▾</span>
+        </div>
+        <div class="food-group-body">
+          <div class="options-grid" id="m2-fat-opts"></div>
+          <div class="custom-input-wrap">
+            <label class="custom-label">Or type your own:</label>
+            <textarea class="custom-input" id="m2-fat-custom" rows="1" placeholder="e.g. 1 tbsp olive oil drizzle..."></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.meal-body -->
+  </div>
+
+  <!-- Notes -->
+  <div class="card">
+    <div class="card-title">📝 Daily Notes</div>
+    <textarea class="custom-input" id="daily-notes" rows="3" placeholder="How are you feeling? Energy levels, hunger, anything unusual..."></textarea>
+  </div>
+
+  <div class="bottom-actions">
+    <button class="copy-btn" onclick="copyLog()">📋 Copy Log</button>
+    <button class="save-btn" onclick="saveDay()">💾 Save Today's Log</button>
+  </div>
+</div>
+
+<!-- WEEKLY PAGE -->
+<div class="page" id="page-weekly">
+  <div class="week-selector" id="week-selector"></div>
+  <div id="weekly-content"></div>
+</div>
+
+<!-- MONTHLY PAGE -->
+<div class="page" id="page-monthly">
+  <div class="month-tabs" id="month-tabs"></div>
+  <div id="monthly-content"></div>
+</div>
+
+<div class="toast" id="toast">✅ Saved!</div>
+
+<script src="app.js"></script>
+</body>
+</html>
